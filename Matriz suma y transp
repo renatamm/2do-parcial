@@ -1,0 +1,83 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+
+#define max 10
+
+using namespace std;
+
+void cargar (int n, int m, int mat[max][max]);
+void cargar2 (int n, int m, int mat2[max][max]);
+void mostrar_matriz_original(int n, int m, int mat[max][max]);
+void mostrar_matriz_trans(int n, int m, int mat[max][max]);
+void suma_de_matrices(int n, int m, int mat[max][max],int mat2[max][max],int mat3[max][max]);
+
+void main ()
+{int mat[max][max], mat2[max][max],mat3[max][max],n,m;
+ cout<<"Ingrese el numero de filas: ";
+ cin>>n;
+ cout<<"ingrese el numero de columnas: ";
+ cin>>m;
+ cout<<"Cargue la primera matriz "<<endl;
+ cargar (n,m,mat);
+ cout<<"Cargue la segunda matriz "<<endl;
+ cargar2 (n,m,mat2);
+ suma_de_matrices(n,m,mat,mat2,mat3);
+ mostrar_matriz_original(n,m,mat);
+ mostrar_matriz_trans(n,m,mat);
+ getch();
+
+}
+
+void cargar (int n, int m, int mat[max][max])
+{ for(int i=0;i<n;i++)
+  {for(int j=0;j<m;j++)
+   {cout<<"Mat["<<i<<"]"<<"["<<j<<"]= ";
+    cin>>mat[i][j];
+   }
+  }
+}
+
+void cargar2 (int n, int m, int mat2[max][max])
+{ for(int i=0;i<n;i++)
+  {for(int j=0;j<m;j++)
+   {cout<<"Mat2["<<i<<"]"<<"["<<j<<"]= ";
+    cin>>mat2[i][j];
+   }
+  }
+}
+
+void mostrar_matriz_original(int n, int m, int mat[max][max])
+{ cout<<"Matriz original"<<endl;
+  for(int i=0;i<n;i++)
+  {for(int j=0;j<m;j++)
+   {cout<<mat[i][j]<<"\t";
+   } 
+   cout<<endl;
+  }
+}
+
+void mostrar_matriz_trans(int n, int m, int mat[max][max])
+{ cout<<"Matriz transpuesta"<<endl;
+  for(int i=0;i<m;i++)
+  {for(int j=0;j<n;j++)
+   {cout<<mat[j][i]<<"\t";
+   }
+   cout<<endl;
+  }
+}
+
+void suma_de_matrices(int n, int m, int mat[max][max],int mat2[max][max],int mat3[max][max])
+{cout<<"Suma de matrices"<<endl;
+  for(int i=0;i<n;i++)
+  {for(int j=0;j<m;j++)
+   {mat3[i][j]=mat[i][j]+mat2[i][j];
+   }
+  }
+  for(int i=0;i<n;i++)
+  {for(int j=0;j<m;j++)
+   {cout<<mat3[j][i]<<"\t";
+   }
+   cout<<endl;
+  }
+}
