@@ -1,0 +1,325 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include "conio.h"
+
+#define MAX 10
+using namespace std;
+
+struct testudiante
+{
+	int CI;
+	int registro;
+	string nombre;
+	string apellido;
+	string fecha_nacimiento;
+	string genero;
+	int estado;
+};
+
+testudiante dato[MAX];
+
+bool fechanacimiento(string fecha, string fechahoy);
+void adicionardato(int n);
+bool verificarhoy(int dd, int mm, int aa, string fechahoy);
+
+void main()
+{
+	int n, c, au;
+	string numero;
+	cout << "planilla de datos de estudiantes" << endl;
+	cout << "Ingresar el numero de estudiantes: ";
+	do
+	{
+		getline(cin, numero);
+		c = numero.length();
+		for (int i = 0; i < c; i++)
+		{
+			if (!(isdigit(numero[i])))
+			{
+				cout << "ingresa solo numeros: ";
+				au = 0;
+				i = c;
+			}
+			else
+			{
+				au = 1;
+			}
+		}
+	} while (au == 0);
+	n = (atoi(numero.substr(0, c + 1).c_str()));
+	cout << endl;
+	adicionardato(n);
+	//getch();
+}
+
+void adicionardato(int n)
+{
+	int aux, j, au, rep, gen;
+	string s, num, reg;
+	bool z;
+	for (int i = 0; i < n; i++)
+	{
+		cout << "estudiante # " << i + 1 << endl;
+		cout << "ingresar el CI del estudiante: ";
+		do
+		{
+			do
+			{
+				getline(cin, num);
+				j = num.length();
+				for (int i2 = 0; i2 < j; i2++)
+				{
+					if (!(isdigit(num[i2])))
+					{
+						cout << "ingresa solo numeros: " ;
+						au = 0;
+						i2 = j;
+					}
+					else
+					{
+						if (j > 7 || j <= 3)
+						{
+							cout << "el numero de CI debe ser menor a 8 y mayor a 3 digitos" << endl;
+							cout << "ingresar el CI del estudiante nuevamente: ";
+							au = 0;
+							i2 = j;
+						}
+						else
+						{
+							au = 1;
+						}
+
+					}
+				}
+			} while (au == 0);
+			dato[i].CI = (atoi(num.substr(0, 7).c_str()));
+			if (i == 0)
+			{
+				rep = 1;
+			}
+			else
+			{
+				for (int k = 0; k < i; k++)
+				{
+					if (dato[i].CI == dato[k].CI)
+					{
+						cout << "el numero de CI ingresado ya existe" << endl;
+						cout << "ingresar el CI del estudiante nuevamente: ";
+						rep = 0;
+						k = i;
+					}
+					else
+					{
+						rep = 1;
+					}
+				}
+			}
+		} while (rep == 0);
+		cout << "ingresar el registro del estudiante: ";
+		do
+		{
+			do
+			{
+				getline(cin, reg);
+				j = reg.length();
+				for (int i2 = 0; i2 < j; i2++)
+				{
+					if (!(isdigit(reg[i2])))
+					{
+						cout << "ingresa solo numeros: ";
+						au = 0;
+						i2 = j;
+					}
+					else
+					{
+						if (j > 10)
+						{
+							cout << "el numero de registro debe ser menor a 10 digitos" << endl;
+							cout << "ingresar el registro del estudiante nuevamente: ";
+							au = 0;
+							i2 = j;
+						}
+						else
+						{
+							au = 1;
+						}
+
+					}
+				}
+			} while (au == 0);
+			dato[i].registro = (atoi(reg.substr(0, 10).c_str()));
+			if (i == 0)
+			{
+				rep = 1;
+			}
+			else
+			{
+				for (int k = 0; k < i; k++)
+				{
+					if (dato[i].registro == dato[k].registro)
+					{
+						cout << "el numero de regitro ingresado ya existe" << endl;
+						cout << "ingresar el registro del estudiante nuevamente: ";
+						rep = 0;
+						k = i;
+					}
+					else
+					{
+						rep = 1;
+					}
+				}
+			}
+		} while (rep==0);
+		cout << "ingresar el nombre del estudiante: ";
+		getline(cin, dato[i].nombre);
+		cout << "ingresar el apellido estudiante: ";
+		getline(cin, dato[i].apellido);
+		cout << "ingresar la fecha de nacimiento del estudiante: ";
+		do
+		{
+			getline(cin, dato[i].fecha_nacimiento);
+			bool z = fechanacimiento(dato[i].fecha_nacimiento, "23/10/2017");
+			if (z == false)
+			{
+				cout << "ingrese la fecha de nacimiento del estudiante en es formato dd/mm/aaaa : ";
+				aux = 0;
+			}
+			else
+			{
+				aux = 1;
+			}
+		} while (aux == 0);
+		cout << "ingresar el sexo del estudiante M o H: ";
+		do
+		{
+			aux = 0;
+			getline(cin, s);
+			aux = s.length();
+			if (aux == 1)
+			{
+				if ((s == "M" || s == "H") || (s == "m" || s == "h"))
+					gen = 0;
+				else
+				{
+					cout << "no corresponde a ninguno de los dos sexo" << endl;
+					cout << "ingresar el sexo del estudiante M o H: ";
+					gen = 1;
+
+				}
+			}
+			else
+			{
+				cout << "solo introduzca una letra " << endl;
+				cout << "M para mujer y H para hombre: ";
+					gen = 1;
+			}
+		} while (gen == 1);
+		dato[i].genero = s;
+		//cout << "ingresar el estado del estudiante: ";
+		dato[i].estado = 0;
+	}
+}
+
+bool fechanacimiento(string fecha, string fechahoy)
+{
+	bool k = true;
+	if ((fecha.at(2) == '/') && (fecha.at(5) == '/'))
+	{
+		int dd = (atoi(fecha.substr(0, 2).c_str()));
+		int mm = (atoi(fecha.substr(3, 2).c_str()));
+		int aa = (atoi(fecha.substr(6, 4).c_str()));
+		if (mm >=1 && mm <= 12)
+		{
+			if (dd >= 1 && dd <= 31)
+			{
+				if (mm == 1 || mm == 3 || mm == 5 || mm == 7 || mm == 8 || mm == 10 || mm == 12)
+				{
+					if (dd >= 1 && dd <= 31)
+					{
+						if (verificarhoy(dd, mm, aa, fechahoy) == false)
+							cout << "Menor de edad" << endl;
+						return k;
+					}
+					else
+						k = false;
+				}
+				else
+				{
+					if (mm == 4 || mm == 6 || mm == 9 || mm == 11)
+					{
+						if (dd >= 1 && dd <= 30)
+						{
+							if (verificarhoy(dd, mm, aa, fechahoy) == false)
+								cout << "Menor de edad" << endl;
+							return k;
+						}
+						else
+							k = false;
+					}
+					else
+					{
+						if (aa % 4 == 0 && aa % 100 != 100 || aa % 400 == 0)
+						{
+							if (dd >= 1 && dd <= 29)
+							{
+								if (verificarhoy(dd, mm, aa, fechahoy) == false)
+									cout << "Menor de edad" << endl;
+								return k;
+							}
+							else
+								k = false;
+						}
+
+						else
+						{
+							if (dd >= 1 && dd <= 28)
+							{
+								if (verificarhoy(dd, mm, aa, fechahoy) == false)
+									cout << "Menor de edad" << endl;
+								return k;
+							}
+							else
+							{
+								k = false;
+								cout << "el numero de dias no corresponde a ningun mes" << endl;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				k = false;
+				cout << "el numero de dias no corresponde a ningun mes" << endl;
+			}
+		}
+		else
+		{
+			k = false;
+			cout << "el numero de mes es incorrecto" << endl;
+		}
+
+	}
+	else
+		k = false;
+	return k;
+}
+
+bool verificarhoy(int dd, int mm, int aa, string fechahoy)
+{
+	bool z = true;
+	int dd1 = (atoi(fechahoy.substr(0, 2).c_str()));
+	int mm1 = (atoi(fechahoy.substr(3, 2).c_str()));
+	int aa1 = (atoi(fechahoy.substr(6, 4).c_str()));
+	if (aa1 - aa < 18)
+		return false;
+	else
+		if (aa1 - aa == 18)
+			if (mm1 - mm < 0)
+				return false;
+			else
+				if (dd1 - dd < 0)
+					return false;
+	return z;
+}
