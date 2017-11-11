@@ -1,0 +1,52 @@
+#include "stdafx.h"
+#include <iostream>
+#include "conio.h"
+#define MAX 10
+
+using namespace std;
+void cargar_matriz_diagonal(int A[MAX][MAX], int orden);
+
+void main()
+{
+	int orden, A[MAX][MAX];
+	cout<<"ingrese el orden de su matriz"<<endl;
+	cin>>orden;
+	cargar_matriz_diagonal(A, orden);
+  getch();
+
+}
+
+void cargar_matriz_diagonal(int A[MAX][MAX], int orden)
+{	
+	int f,c,d,i;
+	f=0;
+	c=0;
+	d=1;
+	while(f<orden)
+	{
+		for(i=f;i>=0;i--)
+		{
+			A[i][c]=d;
+			cout<<"A["<<i<<"]["<<c<<"]="<<A[i][c]<<endl;
+			d++;
+			c++;
+		}
+		f++;
+		c=0;
+	}
+	c++;
+	f=orden-1;
+
+	while(c<orden)
+	{
+		for(i=c;i<orden;i++)
+		{
+			A[f][i]=d;
+			cout<<"A["<<f<<"]["<<i<<"]="<<A[f][i]<<endl;
+			d++;
+			f--;
+		}
+		f=orden-1;
+		c++;
+	}
+}
